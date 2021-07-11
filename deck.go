@@ -1,6 +1,12 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"io/ioutil"
+
+	// "os"
+	"strings"
+)
 
 //create a new type of 'Deck'
 //that is a slice of strings
@@ -23,8 +29,46 @@ func getNewDeck() deck {
 
 	for i, firstDeck := range firstDecksList {
 		for j, secondDeck := range secondDeckList {
-			fmt.Println(i+j, firstDeck+" and "+" : "+secondDeck)
+			fmt.Println(i + j)
+			firstDecksList = append(firstDecksList, firstDeck+secondDeck)
 		}
 	}
 	return firstDecksList
 }
+
+func deal(d deck, index int) (deck, deck) {
+	return d[:index], d[index:]
+}
+
+//code quang vieets
+// func deckToString(d deck) string {
+// 	stringReturn := ""
+// 	for i, deckElement := range d {
+// 		fmt.Print(i)
+// 		stringReturn += deckElement
+// 	}
+// 	return stringReturn
+// }
+
+//code giao vien
+//join
+func (d deck) deckToString() string {
+	//join what []string, separate by
+	return strings.Join([]string(d), "")
+}
+func (d deck) saveStringToFile(fileName string) error {
+	return ioutil.WriteFile(fileName, []byte(d.deckToString()), 0666)
+}
+
+// func (deck) printDeck() string{
+// 	return
+// }
+
+// func readDeckFromFile(fileName string) deck {
+// 	byteSlide, err := ioutil.ReadFile(fileName)
+// 	if err != nil {
+// 		fmt.Println(err)
+// 		os.Exit(1)
+// 	}
+
+// }
